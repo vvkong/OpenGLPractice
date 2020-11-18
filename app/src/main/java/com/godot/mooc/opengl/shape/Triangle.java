@@ -46,13 +46,14 @@ public class Triangle {
         BoyGLUtils.checkGLError("glGetAttribLocation");
         mvpMatrixLocation = GLES20.glGetUniformLocation(program, "uMVPMatrix");
         BoyGLUtils.checkGLError("glGetUniformLocation");
-//        colorLocation = GLES20.glGetUniformLocation(program, "uColor");
+        colorLocation = GLES20.glGetUniformLocation(program, "uColor");
 
     }
 
     public void draw(@NonNull float[] mvpMatrix) {
         GLES20.glUseProgram(program);
 
+        GLES20.glUniform3f(colorLocation, 0.0f, 0.0f, 1.0f);
         GLES20.glUniformMatrix4fv(mvpMatrixLocation, 1, false, mvpMatrix, 0);
 
         GLES20.glEnableVertexAttribArray(vertexLocation);

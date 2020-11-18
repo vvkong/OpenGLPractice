@@ -6,8 +6,6 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.Log;
 
-import com.godot.mooc.BuildConfig;
-
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
@@ -27,9 +25,15 @@ public class BoyGLUtils {
         GLES20.glAttachShader(program, vertexShader);
         GLES20.glAttachShader(program, fragmentShader);
         GLES20.glLinkProgram(program);
-        checkGLError("linkProgram");
-//        GLES20.glDeleteShader(vertexShader);
-//        GLES20.glDeleteShader(fragmentShader);
+        int[] status = new int[1];
+        GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, status, 0);
+        if( status[0] == GLES20.GL_FALSE ) {
+            String error = GLES20.glGetProgramInfoLog(program);
+            checkGLError("linkProgram fail: " + error);
+            GLES20.glDeleteProgram(program);
+        }
+        GLES20.glDeleteShader(vertexShader);
+        GLES20.glDeleteShader(fragmentShader);
         return program;
     }
 
@@ -37,11 +41,13 @@ public class BoyGLUtils {
         int shader = GLES20.glCreateShader(type);
         GLES20.glShaderSource(shader, shaderSourceCode);
         GLES20.glCompileShader(shader);
-        if(BuildConfig.DEBUG) {
+        int[] status = new int[1];
+        GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, status, 0);
+        if( status[0] == GLES20.GL_FALSE ) {
             String log = GLES20.glGetShaderInfoLog(shader);
             Log.e(TAG, "glGetShaderInfoLog: " + log);
+            GLES20.glDeleteShader(shader);
         }
-        checkGLError("createShader, type: "+type);
         return shader;
     }
 
