@@ -47,9 +47,7 @@ public class Oval implements Shape {
             fb.put(y);
             fb.put(0.0f);
             beta += diff;
-            Log.d("oval", "("+x+", "+y +", 0)");
         }
-        Log.d("oval", "pos:"+fb.position());
         fb.position(0);
         return fb;
     }

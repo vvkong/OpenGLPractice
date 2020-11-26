@@ -11,6 +11,10 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 /**
  * Created by AllenWang on 2020/11/15.
@@ -91,4 +95,28 @@ public class BoyGLUtils {
         }
 
     }
+
+    public static IntBuffer createIntBuffer(int[] array) {
+        if( array != null ) {
+            IntBuffer intBuffer = IntBuffer.allocate(array.length);
+            intBuffer.put(array);
+            intBuffer.position(0);
+            return intBuffer;
+        }
+        return null;
+    }
+
+    public static FloatBuffer createFloatBuffer(float[] array) {
+        if( array != null ) {
+            ByteBuffer bb = ByteBuffer.allocateDirect(array.length*4);
+            bb.order(ByteOrder.nativeOrder());
+            FloatBuffer floatBuffer = bb.asFloatBuffer();
+            floatBuffer.put(array);
+            floatBuffer.position(0);
+            return floatBuffer;
+        }
+        return null;
+    }
+
+
 }

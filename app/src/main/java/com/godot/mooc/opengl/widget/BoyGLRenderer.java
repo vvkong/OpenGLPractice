@@ -6,6 +6,7 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
 import com.godot.mooc.App;
+import com.godot.mooc.opengl.shape.ArbitraryShape;
 import com.godot.mooc.opengl.shape.Oval;
 import com.godot.mooc.opengl.shape.Pentagon;
 import com.godot.mooc.opengl.shape.Sphere;
@@ -31,6 +32,8 @@ class BoyGLRenderer implements GLSurfaceView.Renderer {
     private Oval oval;
     private Sphere sphere;
     private Pentagon pentagon;
+    private ArbitraryShape arbitraryShape;
+
     public BoyGLRenderer() {
         Matrix.setIdentityM(rotateMatrix, 0);
         Matrix.rotateM(rotateMatrix, 0, 45, 0.0f, 1.0f, 1.0f);
@@ -47,6 +50,7 @@ class BoyGLRenderer implements GLSurfaceView.Renderer {
         oval = new Oval(context);
         sphere = new Sphere(context);
         pentagon = new Pentagon(context);
+        arbitraryShape = new ArbitraryShape(context);
         GLES20.glClearColor(0, 0, 0, 1);
     }
 
@@ -73,38 +77,44 @@ class BoyGLRenderer implements GLSurfaceView.Renderer {
                 0, 0, 0,
                 0, 1, 0);
 
-        Matrix.setIdentityM(modelMatrix, 0);
-        Matrix.translateM(modelMatrix, 0, -2.0f, 0.0f, -5.0f);
-        Matrix.multiplyMM(mvMatrix, 0, viewMatrix, 0, modelMatrix, 0);
-        Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvMatrix, 0);
-        triangle.draw(mvpMatrix);
-
-        Matrix.setIdentityM(modelMatrix, 0);
-        Matrix.translateM(modelMatrix, 0, 2.0f, 0.0f, -5.0f);
-        Matrix.multiplyMM(mvMatrix, 0, viewMatrix, 0, modelMatrix, 0);
-        Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvMatrix, 0);
-        square.draw(mvpMatrix);
-
-        Matrix.setIdentityM(modelMatrix, 0);
-        Matrix.translateM(modelMatrix, 0, 0.0f, 2.0f, -5.0f);
-        Matrix.multiplyMM(mvMatrix, 0, viewMatrix, 0, modelMatrix, 0);
-        Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvMatrix, 0);
-        oval.draw(mvpMatrix);
-
+//        Matrix.setIdentityM(modelMatrix, 0);
+//        Matrix.translateM(modelMatrix, 0, -2.0f, 0.0f, -5.0f);
+//        Matrix.multiplyMM(mvMatrix, 0, viewMatrix, 0, modelMatrix, 0);
+//        Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvMatrix, 0);
+//        triangle.draw(mvpMatrix);
+//
+//        Matrix.setIdentityM(modelMatrix, 0);
+//        Matrix.translateM(modelMatrix, 0, 2.0f, 0.0f, -5.0f);
+//        Matrix.multiplyMM(mvMatrix, 0, viewMatrix, 0, modelMatrix, 0);
+//        Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvMatrix, 0);
+//        square.draw(mvpMatrix);
+//
+//        Matrix.setIdentityM(modelMatrix, 0);
+//        Matrix.translateM(modelMatrix, 0, 0.0f, 2.0f, -5.0f);
+//        Matrix.multiplyMM(mvMatrix, 0, viewMatrix, 0, modelMatrix, 0);
+//        Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvMatrix, 0);
+//        oval.draw(mvpMatrix);
+//
+//
+//        Matrix.setIdentityM(modelMatrix, 0);
+//        Matrix.translateM(modelMatrix, 0, 0.0f, 0.0f, -5.0f);
+//        Matrix.multiplyMM(mvMatrix, 0, viewMatrix, 0, modelMatrix, 0);
+//        Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvMatrix, 0);
+//        sphere.draw(mvpMatrix);
+//
+//        Matrix.setIdentityM(modelMatrix, 0);
+//        Matrix.multiplyMM(modelMatrix, 0, rotateMatrix, 0, modelMatrix, 0);
+//        Matrix.multiplyMM(modelMatrix, 0, translateMatrix, 0, modelMatrix, 0);
+//        Matrix.multiplyMM(mvMatrix, 0, viewMatrix, 0, modelMatrix, 0);
+//        Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvMatrix, 0);
+//        pentagon.draw(mvpMatrix);
 
         Matrix.setIdentityM(modelMatrix, 0);
         Matrix.translateM(modelMatrix, 0, 0.0f, 0.0f, -5.0f);
         Matrix.multiplyMM(mvMatrix, 0, viewMatrix, 0, modelMatrix, 0);
         Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvMatrix, 0);
-        sphere.draw(mvpMatrix);
+        arbitraryShape.draw(mvpMatrix);
 
-        Matrix.setIdentityM(modelMatrix, 0);
-        Matrix.multiplyMM(modelMatrix, 0, rotateMatrix, 0, modelMatrix, 0);
-        Matrix.multiplyMM(modelMatrix, 0, translateMatrix, 0, modelMatrix, 0);
-
-        Matrix.multiplyMM(mvMatrix, 0, viewMatrix, 0, modelMatrix, 0);
-        Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvMatrix, 0);
-        pentagon.draw(mvpMatrix);
 
     }
 }
